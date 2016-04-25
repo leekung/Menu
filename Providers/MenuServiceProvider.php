@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
+use Mcamara\LaravelLocalization\LaravelLocalization;
 use Modules\Menu\Entities\Menu;
 use Modules\Menu\Entities\Menuitem;
 use Modules\Menu\Repositories\Cache\CacheMenuDecorator;
@@ -151,11 +152,14 @@ class MenuServiceProvider extends ServiceProvider
         if (! $this->app['asgard.isInstalled']) {
             return;
         }
+        $localization = new LaravelLocalization();
+        $locale = $localization->getCurrentLocale();
         $menu = $this->app->make('Modules\Menu\Repositories\MenuRepository');
         $menuItem = $this->app->make('Modules\Menu\Repositories\MenuItemRepository');
         foreach ($menu->allOnline() as $menu) {
             $menuTree = $menuItem->getTreeForMenu($menu->id);
-            MenuFacade::create($menu->name, function (Builder $menu) use ($menuTree) {
+            MenuFacade::create($menu->name, function (Builder $menu) use ($menuTree, $locale) {
+                $menu->setPrefixUrl($locale.'/');
                 foreach ($menuTree as $menuItem) {
                     $this->addItemToMenu($menuItem, $menu);
                 }

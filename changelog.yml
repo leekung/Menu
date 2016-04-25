@@ -1,5 +1,8 @@
 url: https://github.com/AsgardCms/Menu
 versions:
+    "1.15.1":
+        changed:
+            - Add locale prefix
     "1.15.0":
         changed:
             - Submenu items now have their target attribute set
