@@ -1,5 +1,9 @@
 url: https://github.com/AsgardCms/Menu
 versions:
+    "1.16.0":
+        changed:
+            - Using new authorise middleware for more flexibility
+            - Added migration to alter menu item icon field so that Pingpong MenuItem correctly renders empty icon
     "1.15.1":
         changed:
             - Add locale prefix
